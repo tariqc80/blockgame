@@ -3,7 +3,8 @@ package block
 // Link interface
 type Link interface {
 	Previous() Link
-	Validate(Link) bool
+	Validate(*Block) bool
+	GetHash() Hash
 }
 
 // Block struct
@@ -13,8 +14,19 @@ type Block struct {
 }
 
 // NewBlock creates a new Block instance
-func NewBlock() Block {
-	return Block{}
+func NewBlock(t string, p Link) *Block {
+	previousHash := ""
+
+	if p != nil {
+		previousHash = p.GetHash()
+	}
+
+	data := NewData(t, previousHash)
+
+	return &Block{
+		data:     data,
+		previous: p,
+	}
 }
 
 // Data returns the data struct for this block
@@ -49,5 +61,5 @@ func (b *Block) Validate(o *Block) bool {
 		return false
 	}
 
-	return b.previous.Validate(o.previous)
+	return b.previous.Validate(o.previous.(*Block))
 }
