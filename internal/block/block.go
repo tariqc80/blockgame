@@ -8,12 +8,14 @@ type Link interface {
 }
 
 // Block struct
+// implements a Link
 type Block struct {
 	data     SummableData
 	previous Link
 }
 
 // NewBlock creates a new Block instance
+// accepts text and a previous block of type Link interface
 func NewBlock(t string, p Link) *Block {
 	previousHash := ""
 

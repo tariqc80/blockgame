@@ -27,7 +27,7 @@ type Data struct {
 }
 
 // NewData returns a new Data object
-func NewData(t string, p Hash) SummableData {
+func NewData(t string, p Hash) *Data {
 	return &Data{
 		id:           rand.Uint64(),
 		text:         t,
